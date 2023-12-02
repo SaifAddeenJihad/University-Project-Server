@@ -19,43 +19,25 @@ public class Handler {
     public static volatile Queue<byte[]> baos =new LinkedList<>();
     public static void startStream(List<String> IPs) throws UnknownHostException {
 
-        ArrayList<InetAddress> ipAdresses = getIneAdresses((ObservableList<String>) IPs);
-        CommandService.sendCommand(ipAdresses, Commands.STREAM);
+        CommandService.sendCommand(IPs, Commands.STREAM);
         Thread t1=new Thread(new Capture());
         t1.start();
         Thread t2=new Thread(new Sender());
         t2.start();
     }
     public static void closeStream(List<String> IPs) throws UnknownHostException {
-        ArrayList<InetAddress> ipAdresses = getIneAdresses((ObservableList<String>) IPs);
-        CommandService.sendCommand(ipAdresses, Commands.CLOSE_STREAM);
+        CommandService.sendCommand(IPs, Commands.CLOSE_STREAM);
     }
-
-    /*private static ArrayList<InetAddress> getIneAdresses(ArrayList<Client> clients) throws UnknownHostException {
-        ArrayList<InetAddress> ipAdresses =new ArrayList<>();
-        for (Client client: clients)
-            ipAdresses.add(InetAddress.getByName(client.getIpAddress()));
-        return ipAdresses;
-    }*/
     public static void startControl(String IP) throws IOException {
-        InetAddress inetAddress = InetAddress.getByName(IP);
-        CommandService.sendCommand(inetAddress, Commands.CONTROL);
+        CommandService.sendCommand(IP, Commands.CONTROL);
         UDPImageReceiver.start(IP);
     }
     public static void stopControl(String IP) throws IOException {
-        InetAddress inetAddress = InetAddress.getByName(IP);
-        CommandService.sendCommand(inetAddress, Commands.STOP_CONTROL);
+        CommandService.sendCommand(IP, Commands.STOP_CONTROL);
         UDPImageReceiver.stop();
     }
     public static void fileTransfer(List<String> IPs,String savePath,String sendPath) throws IOException {
-        for(String ip:IPs){
-            fileTransfer(ip,savePath,sendPath);
-        }
-    }
-    private static void fileTransfer(String IP,String savePath,String sendPath) throws IOException {
-        InetAddress inetAddress = InetAddress.getByName(IP);
-        CommandService.sendCommand(inetAddress, Commands.FILE_TRANSFER);
-        FileSender fileSender=new FileSender(savePath,sendPath);
+        Thread fileSender = new Thread(new FileSender(IPs, savePath, sendPath));
         fileSender.start();
     }
     public static void fileCollect(List<String> IPs,String savePath,String collectPath){
@@ -69,8 +51,7 @@ public class Handler {
     }
 
     private static void fileCollect(String IP,String savePath,String collectPath) throws IOException {
-        InetAddress inetAddress = InetAddress.getByName(IP);
-        CommandService.sendCommand(inetAddress, Commands.FILE_COLLECT);
+        CommandService.sendCommand(IP, Commands.FILE_COLLECT);
         FileReceiver fileReceiver=new FileReceiver(savePath,collectPath,IP);
         try {
             fileReceiver.start();
@@ -81,26 +62,16 @@ public class Handler {
         }
 
     }
-    private static ArrayList<InetAddress> getIneAdresses(ObservableList<String> IPs) throws UnknownHostException {
-        ArrayList<InetAddress> ipAdresses =new ArrayList<>();
-        for (String IP: IPs)
-            ipAdresses.add(InetAddress.getByName(IP));
-        return ipAdresses;
-    }
     public static void shutdown(List<String> IPs) throws UnknownHostException {
-        ArrayList<InetAddress> ipAdresses = getIneAdresses((ObservableList<String>) IPs);
-        CommandService.sendCommand(ipAdresses, Commands.SHUTDOWN);
+        CommandService.sendCommand(IPs, Commands.SHUTDOWN);
     }
     public static void freeze(List<String> IPs) throws UnknownHostException {
-        ArrayList<InetAddress> ipAdresses = getIneAdresses((ObservableList<String>) IPs);
-        CommandService.sendCommand(ipAdresses, Commands.FREEZE);
+        CommandService.sendCommand(IPs, Commands.FREEZE);
     }
     public static void unfreeze(List<String> IPs) throws UnknownHostException {
-        ArrayList<InetAddress> ipAdresses = getIneAdresses((ObservableList<String>) IPs);
-        CommandService.sendCommand(ipAdresses, Commands.UNFREEZE);
+        CommandService.sendCommand(IPs, Commands.UNFREEZE);
     }
     public static void openApp(List<String> IPs,String appName, String URL) throws UnknownHostException {
-        ArrayList<InetAddress> ipAdresses = getIneAdresses((ObservableList<String>) IPs);
-        CommandService.sendCommand(ipAdresses, "start "+appName+" \""+URL+"\"");
+        CommandService.sendCommand(IPs, "start "+appName+" \""+URL+"\"");
     }
     }
