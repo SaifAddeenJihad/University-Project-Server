@@ -59,7 +59,6 @@ public class FileSender implements Runnable{
             }
         } catch (FileNotFoundException e) {
             System.out.println("File " + file.getName() + " is not found.");
-            throw new RuntimeException(e);
         } catch (IOException e) {
             System.out.println("Couldn't read file " + file.getName());
         }

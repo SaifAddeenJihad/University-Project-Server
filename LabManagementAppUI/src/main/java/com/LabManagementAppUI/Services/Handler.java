@@ -36,31 +36,13 @@ public class Handler {
         CommandService.sendCommand(IP, Commands.STOP_CONTROL);
         UDPImageReceiver.stop();
     }
-    public static void fileTransfer(List<String> IPs,String savePath,String sendPath) throws IOException {
+    public static void fileTransfer(List<String> IPs, String savePath, String sendPath) {
         Thread fileSender = new Thread(new FileSender(IPs, savePath, sendPath));
         fileSender.start();
     }
-    public static void fileCollect(List<String> IPs,String savePath,String collectPath){
-        for (String ip : IPs){
-            try {
-                fileCollect(ip,savePath,collectPath);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    private static void fileCollect(String IP,String savePath,String collectPath) throws IOException {
-        CommandService.sendCommand(IP, Commands.FILE_COLLECT);
-        FileReceiver fileReceiver=new FileReceiver(savePath,collectPath,IP);
-        try {
-            fileReceiver.start();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-
+    public static void fileCollect(List<String> IPs, String savePath, String collectPath){
+        Thread fileReceiver = new Thread(new FileReceiver(IPs, savePath, collectPath));
+        fileReceiver.start();
     }
     public static void shutdown(List<String> IPs) throws UnknownHostException {
         CommandService.sendCommand(IPs, Commands.SHUTDOWN);
