@@ -1,0 +1,26 @@
+.custom-button {
+    -fx-text-alignment: center;
+    -fx-background-color: #6096B4;
+    -fx-text-fill: #fff;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px 20px;
+}
+
+.custom-button:hover {
+    -fx-background-color: #93BFCF;
+}
+.label {
+    -fx-font-weight: bold;
+}
+/* Increase the size of the tab buttons */
+.tab .tab-header-area {
+    -fx-max-height: 200px; /* Adjust the maximum height as needed to make the buttons larger */
+}
+
+/* Increase icon size and center it */
+.tab .tab-label .tab-icon {
+    -fx-scale-x: 2; /* Adjust the scale factor as needed */
+    -fx-scale-y: 2; /* Adjust the scale factor as needed */
+    -fx-alignment: center;
+}

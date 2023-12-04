@@ -1,42 +1,42 @@
 package com.LabManagementAppUI.FileTransfer;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
+import com.LabManagementAppUI.Services.CommandService;
+import com.LabManagementAppUI.Services.Commands;
 import com.LabManagementAppUI.auxiliaryClasses.IPorts;
 import com.LabManagementAppUI.network.*;
 
-public class FileReceiver {
-    private String ip;
+public class FileReceiver implements Runnable{
+    private final List<String> IPs;
     private String savePath;
-    private String collectPath;
-    private DataInputStream inputStream;
-    private DataOutputStream outputStream;
-    public FileReceiver(String savePath,String collectPath,String ip) {
-        this.savePath=savePath;
-        this.collectPath=collectPath;
-        this.ip =ip;
+    private final String collectPath;
+    private TCPServer connection;
+    public FileReceiver(List<String> IPs, String savePath, String collectPath) {
+        this.savePath = savePath;
+        this.collectPath = collectPath;
+        this.IPs = IPs;
     }
 
-    public void start() throws IOException, ClassNotFoundException, URISyntaxException {
-        TCPClient connection= (TCPClient) ConnectionFactory.getIConnection(IConnectionNames.TCP_CLIENT);
-        connection.initialize(IPorts.FILE_TRANSFER,ip);
-        //Socket socket = new Socket(serverIp, 7777);
-        inputStream = connection.getInputStream();
-        outputStream =connection.getOutputStream();
-        //send cllectionpath
-        outputStream.writeUTF(collectPath);
-        outputStream.flush();
-        String id =inputStream.readUTF();
-        savePath = savePath+"/"+id;
-        Boolean isDirectory = inputStream.readBoolean();
+    @Override
+    public void run() {
+        for(String ip: IPs) {
+            CommandService.sendCommand(ip, Commands.FILE_COLLECT);
+            start(ip);
+        }
+    }
+    public void start(String ip) {
+        connection = (TCPServer) ConnectionFactory.getIConnection(IConnectionNames.TCP_SERVER);
+        connection.initialize(IPorts.FILE_TRANSFER, null);
+
+        connection.sendString(collectPath);
+
+        String id = ip;
+        savePath = savePath + "/" + id;
+        boolean isDirectory = connection.receiveBoolean();
         if (isDirectory) {
             receiveDirectory();
         } else {
@@ -45,26 +45,30 @@ public class FileReceiver {
         connection.close();
     }
 
-    private void receiveFile() throws IOException {
-        String fileName = inputStream.readUTF();
+    private void receiveFile() {
+        String fileName = connection.receiveString();
 
         // Receive the file content
-        int fileSize = inputStream.readInt();
+        int fileSize = connection.receiveInt();
         long iterations = fileSize / 1024;
         byte[] fileContent = new byte[fileSize];
-        inputStream.readFully(fileContent);
+        connection.receiveFile(fileContent);
 
         // Save the file to the local filesystem
         Path filePath = Path.of(savePath + "\\" + fileName);
-        Files.createDirectories(filePath.getParent());
-        Files.write(filePath, fileContent);
+        try {
+            Files.createDirectories(filePath.getParent());
+            Files.write(filePath, fileContent);
+        } catch (IOException e) {
+            System.out.println("Couldn't write file " + fileName + " to path " + filePath);
+        }
 
         System.out.println("File received: " + filePath.toString());
     }
 
-    private void receiveDirectory() throws IOException, URISyntaxException {
-        String directoryName = inputStream.readUTF();
-        int numberOfFiles = inputStream.readInt();
+    private void receiveDirectory() {
+        String directoryName = connection.receiveString();
+        int numberOfFiles = connection.receiveInt();
         savePath=savePath+"\\"+directoryName;
         for(int i=0;i<numberOfFiles;i++)
             receiveFile();
