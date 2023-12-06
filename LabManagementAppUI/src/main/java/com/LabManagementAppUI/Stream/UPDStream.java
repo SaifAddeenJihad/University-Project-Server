@@ -1,7 +1,10 @@
 package com.LabManagementAppUI.Stream;
 
 import com.LabManagementAppUI.Services.Handler;
-import org.xerial.snappy.Snappy;
+import com.LabManagementAppUI.auxiliaryClasses.IPorts;
+import com.LabManagementAppUI.network.ConnectionFactory;
+import com.LabManagementAppUI.network.IConnectionNames;
+import com.LabManagementAppUI.network.UDPClient;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -9,14 +12,18 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
 
-public class
-Capture implements Runnable{
-
+public class UPDStream implements Runnable{
+    private UDPClient udpClient;
+    private final String clientIP;
+    public UPDStream(String clientIP){
+        this.clientIP = clientIP;
+    }
     @Override
     public void run() {
+        udpClient = (UDPClient) ConnectionFactory.getIConnection(IConnectionNames.UDP_CLIENT);
+        udpClient.initialize(IPorts.UDP_STREAM, clientIP);
+
         Robot robot = null;
         try {
             robot = new Robot();
@@ -44,16 +51,27 @@ Capture implements Runnable{
             Graphics2D graphics = image.createGraphics();
             graphics.drawImage(scaledCursorImage, mouse.x, mouse.y, null);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] fullBuffer;
             try {
                 ImageIO.write(image, "jpeg", baos);
-                byte[] fullBuffer = baos.toByteArray();
+                fullBuffer = baos.toByteArray();
 /*                byte[] compressed= new byte[0];
                 compressed = Snappy.compress(fullBuffer);*/
-                Handler.baos.add(fullBuffer);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println(Handler.baos.size());
+            int chunkSize = 65507;
+            int totalChunks = (int) Math.ceil((double) fullBuffer.length / chunkSize);
+
+            for (int chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
+                int offset = chunkIndex * chunkSize;
+                int length = Math.min(chunkSize, fullBuffer.length - offset);
+                byte[] chunkBuffer = new byte[length];
+                System.arraycopy(fullBuffer, offset, chunkBuffer, 0, length);
+
+                //DatagramPacket datagramPacket = new DatagramPacket(chunkBuffer, chunkBuffer.length, multicastGroup, 1234);
+                udpClient.send(chunkBuffer);
+            }
         }
     }
 }

@@ -277,21 +277,32 @@ public class Main extends Application {
         Button shareButton = new Button("Start Sharing!");
         shareButton.setOnAction(e -> {
             ObservableList<String> selectedIPs = studentIPsListView.getSelectionModel().getSelectedItems();
-            try {
-                Handler.startStream(selectedIPs);
-            } catch (UnknownHostException ex) {
-                throw new RuntimeException(ex);
-            }
+            Handler.startStream(selectedIPs);
         });
         shareButton.setStyle("-fx-shape: 'M 50 50 m -50 0 a 50 50 0 1 0 100 0 a 50 50 0 1 0 -100 0';");
         Button stopShareButton = new Button("Stop Sharing!");
         stopShareButton.setOnAction(e -> {
-
+            ObservableList<String> selectedIPs = studentIPsListView.getSelectionModel().getSelectedItems();
+            Handler.closeStream(selectedIPs);
         });
         stopShareButton.setStyle("-fx-shape: 'M 50 50 m -50 0 a 50 50 0 1 0 100 0 a 50 50 0 1 0 -100 0';");
 
+        // This is temporary to test the multicast in labs
+        Button udpShareButton = new Button("Start UDP Sharing!");
+        udpShareButton.setOnAction(e -> {
+            ObservableList<String> selectedIPs = studentIPsListView.getSelectionModel().getSelectedItems();
+            Handler.startUdpStream(selectedIPs);
+        });
+        udpShareButton.setStyle("-fx-shape: 'M 50 50 m -50 0 a 50 50 0 1 0 100 0 a 50 50 0 1 0 -100 0';");
+        Button stopUdpShareButton = new Button("Stop UDP Sharing!");
+        stopUdpShareButton.setOnAction(e -> {
+            ObservableList<String> selectedIPs = studentIPsListView.getSelectionModel().getSelectedItems();
+            Handler.closeUdpStream(selectedIPs);
+        });
+        stopUdpShareButton.setStyle("-fx-shape: 'M 50 50 m -50 0 a 50 50 0 1 0 100 0 a 50 50 0 1 0 -100 0';");
+
         VBox shareVbox = new VBox(10);  // 10 is the spacing between the children
-        shareVbox.getChildren().addAll(studentIPsListView, shareButton,stopShareButton);
+        shareVbox.getChildren().addAll(studentIPsListView, shareButton,stopShareButton, udpShareButton, stopUdpShareButton);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.getChildren().add(shareVbox);  // Added at column 0, row 0
         shareVbox.setAlignment(Pos.CENTER);
@@ -432,11 +443,7 @@ public class Main extends Application {
         Button shareButton = new Button("Send File");
         shareButton.setOnAction(e -> {
             ObservableList<String> selectedIPs = studentIPsListView.getSelectionModel().getSelectedItems();
-            try {
-                Handler.fileTransfer(selectedIPs,pathTo,pathFrom);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            Handler.fileTransfer(selectedIPs,pathTo,pathFrom);
         });
         shareButton.setStyle("-fx-shape: 'M 50 50 m -50 0 a 50 50 0 1 0 100 0 a 50 50 0 1 0 -100 0';");
         VBox shareVbox = new VBox(10);  // 10 is the spacing between the children

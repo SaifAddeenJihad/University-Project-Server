@@ -23,7 +23,7 @@ public class Sender implements Runnable {
             //MulticastSocket multicastSocket = new MulticastSocket();
             //InetAddress multicastGroup = InetAddress.getByName("239.0.0.1"); // Multicast IP address
             System.out.println("im heere");
-            while(true){
+            while(!Thread.currentThread().isInterrupted()){
                 if(Handler.baos.isEmpty())
                     continue;
                 byte[] compressed= Handler.baos.remove();

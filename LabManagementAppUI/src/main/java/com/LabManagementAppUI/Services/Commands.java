@@ -3,6 +3,8 @@ package com.LabManagementAppUI.Services;
 public enum Commands {
     STREAM("Stream"),
     CLOSE_STREAM("Close Stream"),
+    UDP_STREAM("UDP Stream"),
+    CLOSE_UDP_STREAM("Close UDP Stream"),
     CONTROL("Control"),
     STOP_CONTROL("Stop Control"),
     FILE_TRANSFER("File Transfer"),

@@ -5,6 +5,7 @@ import com.LabManagementAppUI.FileTransfer.FileSender;
 import com.LabManagementAppUI.RemoteControl.Controller.UDPImageReceiver;
 import com.LabManagementAppUI.Stream.Capture;
 import com.LabManagementAppUI.Stream.Sender;
+import com.LabManagementAppUI.Stream.UPDStream;
 import com.LabManagementAppUI.auxiliaryClasses.Client;
 import javafx.collections.ObservableList;
 
@@ -16,17 +17,40 @@ import java.util.*;
 
 public class Handler {
     private Handler(){}
+    private static Thread streamCapture, streamSender;
+    private static List<Thread> udpStreamThreads;
     public static volatile Queue<byte[]> baos =new LinkedList<>();
-    public static void startStream(List<String> IPs) throws UnknownHostException {
+    public static void startStream(List<String> IPs) {
 
         CommandService.sendCommand(IPs, Commands.STREAM);
-        Thread t1=new Thread(new Capture());
-        t1.start();
-        Thread t2=new Thread(new Sender());
-        t2.start();
+        streamCapture = new Thread(new Capture());
+        streamCapture.start();
+
+        streamSender = new Thread(new Sender());
+        streamSender.start();
     }
-    public static void closeStream(List<String> IPs) throws UnknownHostException {
+    public static void closeStream(List<String> IPs) {
         CommandService.sendCommand(IPs, Commands.CLOSE_STREAM);
+        streamCapture.interrupt();
+        streamSender.interrupt();
+    }
+    public static void startUdpStream(List<String> IPs) {
+        CommandService.sendCommand(IPs, Commands.UDP_STREAM);
+        udpStreamThreads = new ArrayList<>();
+        for(String ip: IPs) {
+            udpStreamThreads.add(startUdpStream(ip));
+        }
+    }
+    private static Thread startUdpStream(String ip) {
+        Thread streamThread = new Thread(new UPDStream(ip));
+        streamThread.start();
+        return streamThread;
+    }
+    public static void closeUdpStream(List<String> IPs) {
+        CommandService.sendCommand(IPs, Commands.CLOSE_UDP_STREAM);
+        for(Thread thread: udpStreamThreads) {
+            thread.interrupt();
+        }
     }
     public static void startControl(String IP) throws IOException {
         CommandService.sendCommand(IP, Commands.CONTROL);
@@ -56,4 +80,4 @@ public class Handler {
     public static void openApp(List<String> IPs,String appName, String URL) throws UnknownHostException {
         CommandService.sendCommand(IPs, "start "+appName+" \""+URL+"\"");
     }
-    }
+}
