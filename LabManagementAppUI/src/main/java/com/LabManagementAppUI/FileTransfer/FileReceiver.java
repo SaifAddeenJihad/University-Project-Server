@@ -1,36 +1,45 @@
 package com.LabManagementAppUI.FileTransfer;
 
+import com.LabManagementAppUI.Services.CommandService;
+import com.LabManagementAppUI.Services.Commands;
+import com.LabManagementAppUI.auxiliaryClasses.IPorts;
+import com.LabManagementAppUI.network.ConnectionFactory;
+import com.LabManagementAppUI.network.IConnectionNames;
+import com.LabManagementAppUI.network.TCPServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import com.LabManagementAppUI.Services.CommandService;
-import com.LabManagementAppUI.Services.Commands;
-import com.LabManagementAppUI.auxiliaryClasses.IPorts;
-import com.LabManagementAppUI.network.*;
-
-public class FileReceiver implements Runnable{
+public class FileReceiver implements Runnable {
+    private static final Logger logger = LogManager.getLogger(FileReceiver.class);
     private final List<String> IPs;
-    private String savePath;
     private final String collectPath;
+    private String savePath;
     private TCPServer connection;
+
     public FileReceiver(List<String> IPs, String savePath, String collectPath) {
         this.savePath = savePath;
         this.collectPath = collectPath;
         this.IPs = IPs;
+        logger.info("FileReceiver initialized successfully");
     }
 
     @Override
     public void run() {
-        for(String ip: IPs) {
+        for (String ip : IPs) {
             CommandService.sendCommand(ip, Commands.FILE_COLLECT);
             start(ip);
         }
     }
+
     public void start(String ip) {
         connection = (TCPServer) ConnectionFactory.getIConnection(IConnectionNames.TCP_SERVER);
         connection.initialize(IPorts.FILE_TRANSFER, null);
+        logger.info("FileReceiver connection created successfully");
 
         connection.sendString(collectPath);
 
@@ -48,19 +57,17 @@ public class FileReceiver implements Runnable{
     private void receiveFile() {
         String fileName = connection.receiveString();
 
-        // Receive the file content
         int fileSize = connection.receiveInt();
-        long iterations = fileSize / 1024;
         byte[] fileContent = new byte[fileSize];
         connection.receiveFile(fileContent);
 
-        // Save the file to the local filesystem
         Path filePath = Path.of(savePath + "\\" + fileName);
         try {
             Files.createDirectories(filePath.getParent());
             Files.write(filePath, fileContent);
+            logger.info("filePath:"+filePath+" received successfully");
         } catch (IOException e) {
-            System.out.println("Couldn't write file " + fileName + " to path " + filePath);
+            logger.error("Couldn't write file " + fileName + " to path " + filePath);
         }
 
         System.out.println("File received: " + filePath.toString());
@@ -69,9 +76,12 @@ public class FileReceiver implements Runnable{
     private void receiveDirectory() {
         String directoryName = connection.receiveString();
         int numberOfFiles = connection.receiveInt();
-        savePath=savePath+"\\"+directoryName;
-        for(int i=0;i<numberOfFiles;i++)
+        savePath = savePath + "\\" + directoryName;
+        for (int i = 0; i < numberOfFiles; i++){
             receiveFile();
+        }
+
+        logger.info("receiveDirectory completed");
     }
 
 }

@@ -1,8 +1,13 @@
 package com.LabManagementAppUI.RemoteControl.Controller;
 
+import com.LabManagementAppUI.FileTransfer.FileSender;
 import com.LabManagementAppUI.auxiliaryClasses.IPorts;
-import com.LabManagementAppUI.network.*;
-
+import com.LabManagementAppUI.network.ConnectionFactory;
+import com.LabManagementAppUI.network.IConnectionNames;
+import com.LabManagementAppUI.network.TCPClient;
+import com.LabManagementAppUI.network.UDPServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xerial.snappy.Snappy;
 
 import javax.imageio.ImageIO;
@@ -16,6 +21,7 @@ import java.net.DatagramPacket;
 import java.net.Socket;
 
 public class UDPImageReceiver {
+    private static final Logger logger = LogManager.getLogger(UDPImageReceiver.class);
     private static final JFrame frame = new JFrame();
 
     //JDesktopPane represents the main container that will contain all connected clients' screens
@@ -25,24 +31,27 @@ public class UDPImageReceiver {
     private static final JInternalFrame interFrame = new JInternalFrame("Server Screen", true, true, true);
     private static final JPanel cPanel = new JPanel();
     private static final int maxBufferSize = 65507;
-    private static boolean isRunning=true;
-    public static void stop(){
-        isRunning=false;
+    private static boolean isRunning = true;
+
+    public static void stop() {
+        isRunning = false;
     }
 
     public static void start(String ipAddress) throws IOException {
         UDPServer connection = (UDPServer) ConnectionFactory.getIConnection(IConnectionNames.UDP_SERVER);
         connection.initialize(IPorts.CONTROL, null);
-        //DatagramSocket datagramSocket =new DatagramSocket(1234);
+
         startSendEvents(ipAddress);
 
         initializeFrame();
+        logger.info("start receiving image and displaying it");
 
         while (isRunning) {
             byte[] fullBuffer = reciveImage(connection);
             displayImage(fullBuffer);
         }
         frame.dispose();
+        logger.info("finish receiving image and displaying it");
     }
 
     private static void displayImage(byte[] fullBuffer) {
@@ -88,23 +97,26 @@ public class UDPImageReceiver {
         frame.setVisible(true);
         interFrame.setLayout(new BorderLayout());
         interFrame.getContentPane().add(cPanel, BorderLayout.CENTER);
-        interFrame.setSize(100, 100);
+        interFrame.setSize(100, 100);//check this later
         desktop.add(interFrame);
 
         try {
             //Initially show the internal frame maximized
             interFrame.setMaximum(true);
         } catch (PropertyVetoException ex) {
-            ex.printStackTrace();
+            logger.error(new RuntimeException());
+
         }
         //This allows to handle KeyListener events
         cPanel.setFocusable(true);
         interFrame.setVisible(true);
+        logger.info("initializeFrame completed");
     }
 
     static void startSendEvents(String ipAddress) {
         TCPClient tcpClient = (TCPClient) ConnectionFactory.getIConnection(IConnectionNames.TCP_CLIENT);
-        tcpClient.initialize(IPorts.CONTROL+10, ipAddress);
+        tcpClient.initialize(IPorts.CONTROL + 10, ipAddress);
         new SendEvents(tcpClient, cPanel, "1920", "1080");
+        logger.info("startSendEvents completed");
     }
 }

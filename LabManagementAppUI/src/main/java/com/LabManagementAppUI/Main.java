@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.logging.log4j.*;
 
 public class Main extends Application {
     private GridPane gridPane;
@@ -43,14 +44,15 @@ public class Main extends Application {
     private String IPRangeFrom;
     private String IPRangeTo;
 
+    private static final Logger logger= LogManager.getLogger(Main.class);
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
-
-
+        logger.info("complete the mission");
         this.borderPane = new BorderPane();
         LinearGradient gradient = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE, new Stop[]{
                 new Stop(0, Color.web("#FFFFFF")),
@@ -274,18 +276,7 @@ public class Main extends Application {
             studentIPs.add(client.getIpAddress());
         }
         studentIPsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        Button shareButton = new Button("Start Sharing!");
-        shareButton.setOnAction(e -> {
-            ObservableList<String> selectedIPs = studentIPsListView.getSelectionModel().getSelectedItems();
-            Handler.startStream(selectedIPs);
-        });
-        shareButton.setStyle("-fx-shape: 'M 50 50 m -50 0 a 50 50 0 1 0 100 0 a 50 50 0 1 0 -100 0';");
-        Button stopShareButton = new Button("Stop Sharing!");
-        stopShareButton.setOnAction(e -> {
-            ObservableList<String> selectedIPs = studentIPsListView.getSelectionModel().getSelectedItems();
-            Handler.closeStream(selectedIPs);
-        });
-        stopShareButton.setStyle("-fx-shape: 'M 50 50 m -50 0 a 50 50 0 1 0 100 0 a 50 50 0 1 0 -100 0';");
+
 
         // This is temporary to test the multicast in labs
         Button udpShareButton = new Button("Start UDP Sharing!");
@@ -302,7 +293,7 @@ public class Main extends Application {
         stopUdpShareButton.setStyle("-fx-shape: 'M 50 50 m -50 0 a 50 50 0 1 0 100 0 a 50 50 0 1 0 -100 0';");
 
         VBox shareVbox = new VBox(10);  // 10 is the spacing between the children
-        shareVbox.getChildren().addAll(studentIPsListView, shareButton,stopShareButton, udpShareButton, stopUdpShareButton);
+        shareVbox.getChildren().addAll(studentIPsListView, udpShareButton, stopUdpShareButton);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.getChildren().add(shareVbox);  // Added at column 0, row 0
         shareVbox.setAlignment(Pos.CENTER);

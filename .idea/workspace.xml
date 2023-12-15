@@ -4,40 +4,95 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ca13a02-4b8f-4f23-87cd-0ffc6f24fe61" name="Changes" comment="removed .idea files from commit">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/javafx_swt.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/server.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/.gitignore" afterDir="false" />
+    <list default="true" id="c6791bf0-e7e0-40e6-a012-5b25c634fb76" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/University-Project-Server.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_dorkbox_Notify_3_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_dorkbox_ObjectPool_2_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_dorkbox_TweenEngine_8_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_eljavatar_SwingUtils_1_3_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_ibm_icu_icu4j_60_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_jhlabs_filters_2_0_235.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_14_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_core_2_14_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_4_3_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_9_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_20.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_20.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_20.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_win_20.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_20.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_win_20.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_20.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_20.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_swing_20_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_swing_win_20_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_2_0_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_swinglabs_swing_worker_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_swinglabs_swingx_1_6_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_swinglabs_swingx_swingx_all_1_6_5_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_xerial_snappy_snappy_java_1_1_8_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/FileTransfer/FileReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/FileTransfer/FileReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/FileTransfer/FileSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/FileTransfer/FileSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/RemoteControl/Controller/UDPImageReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/RemoteControl/Controller/UDPImageReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/Services/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/Services/Handler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/Stream/Capture.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/Stream/Sender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/Stream/UPDStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/Stream/UPDStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/ConnectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/ConnectionFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/MulticastReceiver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/MulticastSender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/TCP.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/TCP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/TCPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/TCPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/TCPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/TCPServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/UDP.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/UDP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/UDPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/UDPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/UDPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/network/UDPServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/LabManagementAppUI/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--follow-tags" />
+        <option name="title" value="Current Branch" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 4
-}</component>
-  <component name="ProjectId" id="2Yh1gKsSsYb46utksMN3MO3XRwq" />
+  <component name="ProjectId" id="2ZZqvFhNtps6YHTjluFgrw7oEQ2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -46,80 +101,23 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "file-services-fixes",
-    "last_opened_file_path": "/home/babualrub/Desktop/server",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.12698412",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "advanced.settings",
-    "vue.rearranger.settings.migration": "true"
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.LabManagementAppUI.Main" />
-      <module name="server" />
-      <option name="PROGRAM_PARAMETERS" value="--module-path ${PATH_TO_FX} --add-modules=javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.LabManagementAppUI.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <module name="server" />
-      <option name="PROGRAM_PARAMETERS" value="--module-path ${PATH_TO_FX} --add-modules=javafx.controls,javafx.fxml " />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="server" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="server" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="6ca13a02-4b8f-4f23-87cd-0ffc6f24fe61" name="Changes" comment="" />
-      <created>1700963106225</created>
+      <changelist id="c6791bf0-e7e0-40e6-a012-5b25c634fb76" name="Changes" comment="" />
+      <created>1702640179876</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1700963106225</updated>
-      <workItem from="1700963107232" duration="1398000" />
-      <workItem from="1700965006877" duration="9992000" />
-      <workItem from="1701115840294" duration="5197000" />
-      <workItem from="1701121062636" duration="18625000" />
-      <workItem from="1701560954832" duration="304000" />
-      <workItem from="1701561267374" duration="26000" />
-      <workItem from="1701561306331" duration="702000" />
-      <workItem from="1701562175897" duration="11000" />
-      <workItem from="1701562204512" duration="141000" />
-      <workItem from="1701562376791" duration="10000" />
+      <updated>1702640179876</updated>
+      <workItem from="1702640181868" duration="16966000" />
     </task>
     <servers />
   </component>
@@ -131,19 +129,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="file-services-fixes" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -152,10 +138,11 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.UnsatisfiedLinkError" package="java.lang" />
-          <option name="timeStamp" value="2" />
-        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/LabManagementAppUI/src/main/java/com/LabManagementAppUI/Main.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

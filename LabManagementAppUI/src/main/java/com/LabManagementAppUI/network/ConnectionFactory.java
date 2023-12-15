@@ -20,12 +20,6 @@ public class ConnectionFactory {
             case "udpserver":
                 connection = new UDPServer();
                 break;
-            case "multicastsender":
-                connection = new MulticastSender();
-                break;
-            case "multicastreceiver":
-                connection = new MulticastReceiver();
-                break;
             default:
                 throw new IllegalArgumentException("Unknown connection type: " + connectionType);
         }

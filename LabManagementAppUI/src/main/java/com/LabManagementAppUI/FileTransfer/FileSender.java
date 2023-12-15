@@ -4,6 +4,8 @@ import com.LabManagementAppUI.Services.CommandService;
 import com.LabManagementAppUI.Services.Commands;
 import com.LabManagementAppUI.auxiliaryClasses.IPorts;
 import com.LabManagementAppUI.network.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import java.io.*;
@@ -11,6 +13,8 @@ import java.util.List;
 
 
 public class FileSender implements Runnable{
+
+    private static final Logger logger = LogManager.getLogger(FileSender.class);
     private TCPServer connection;
     private final String clientSavePath;
     private final String senderFilePath;
@@ -20,6 +24,7 @@ public class FileSender implements Runnable{
         this.clientSavePath = clientSavePath;
         this.senderFilePath = senderFilePath;
         this.IPs = IPs;
+        logger.info("FileSender initialized successfully");
     }
 
 
@@ -33,6 +38,7 @@ public class FileSender implements Runnable{
     private void send() {
         connection= (TCPServer) ConnectionFactory.getIConnection(IConnectionNames.TCP_SERVER);
         connection.initialize(IPorts.FILE_TRANSFER,null);
+        logger.info("FileSender connection created successfully");
         connection.sendString(clientSavePath);
 
         File file = new File(senderFilePath);
@@ -58,9 +64,9 @@ public class FileSender implements Runnable{
                 connection.sendFileData(buffer, bytesRead);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File " + file.getName() + " is not found.");
+            logger.error("File " + file.getName() + " is not found." +new FileNotFoundException());
         } catch (IOException e) {
-            System.out.println("Couldn't read file " + file.getName());
+            logger.error("Couldn't read file " + file.getName() +new IOException());
         }
     }
 
@@ -79,6 +85,7 @@ public class FileSender implements Runnable{
                 }
             }
         }
+        logger.info("sendDirectory completed");
 
     }
 }
