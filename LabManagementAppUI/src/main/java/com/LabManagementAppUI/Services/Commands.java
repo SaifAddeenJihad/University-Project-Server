@@ -13,7 +13,10 @@ public enum Commands {
     FREEZE("Freeze"),
     UNFREEZE("Unfreeze"),
     OPEN_APP("Open App"),
-    BLOCK_INTERNET("Block Internet");
+    UNBLOCK_ALL("Unblock All"),
+    BLOCK_WEBSITE("Block Website"),
+    ALLOW_DEFAULT("Allow Default"),
+    ALLOW_WEBSITE("Allow Website");
 
 
     public final String label;

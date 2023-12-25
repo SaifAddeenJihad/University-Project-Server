@@ -7,8 +7,6 @@ import com.LabManagementAppUI.Stream.UPDStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,12 +45,12 @@ public class Handler {
         }
     }
 
-    public static void startControl(String IP) throws IOException {
+    public static void startControl(String IP) {
         CommandService.sendCommand(IP, Commands.CONTROL);
         UDPImageReceiver.start(IP);
     }
 
-    public static void stopControl(String IP) throws IOException {
+    public static void stopControl(String IP) {
         CommandService.sendCommand(IP, Commands.STOP_CONTROL);
         UDPImageReceiver.stop();//thread?
     }
@@ -67,19 +65,33 @@ public class Handler {
         fileReceiver.start();
     }
 
-    public static void shutdown(List<String> IPs) throws UnknownHostException {
+    public static void shutdown(List<String> IPs) {
         CommandService.sendCommand(IPs, Commands.SHUTDOWN);
     }
 
-    public static void freeze(List<String> IPs) throws UnknownHostException {
+    public static void freeze(List<String> IPs) {
         CommandService.sendCommand(IPs, Commands.FREEZE);
     }
 
-    public static void unfreeze(List<String> IPs) throws UnknownHostException {
+    public static void unfreeze(List<String> IPs) {
         CommandService.sendCommand(IPs, Commands.UNFREEZE);
     }
 
-    public static void openApp(List<String> IPs, String appName, String URL) throws UnknownHostException {
+    public static void openApp(List<String> IPs, String appName, String URL) {
         CommandService.sendCommand(IPs, "start " + appName + " \"" + URL + "\"");
+    }
+    public static void allowDefault(List<String> IPs) {
+        CommandService.sendCommand(IPs, Commands.ALLOW_DEFAULT);
+    }
+    public static void unblockAll(List<String> IPs) {
+        CommandService.sendCommand(IPs, Commands.UNBLOCK_ALL);
+    }
+    public static void allowWebsite(List<String> IPs, String URL) {
+        String command = Commands.ALLOW_WEBSITE.label + ":" + URL;
+        CommandService.sendCommand(IPs, command);
+    }
+    public static void blockWebsite(List<String> IPs, String URL) {
+        String command = Commands.BLOCK_WEBSITE.label + ":" + URL;
+        CommandService.sendCommand(IPs, command);
     }
 }

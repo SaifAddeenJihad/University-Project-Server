@@ -37,7 +37,7 @@ public class UDPImageReceiver {
         isRunning = false;
     }
 
-    public static void start(String ipAddress) throws IOException {
+    public static void start(String ipAddress) {
         UDPServer connection = (UDPServer) ConnectionFactory.getIConnection(IConnectionNames.UDP_SERVER);
         connection.initialize(IPorts.CONTROL, null);
 

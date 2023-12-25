@@ -1,5 +1,6 @@
 package com.LabManagementAppUI;
 
+import com.LabManagementAppUI.FrontEnd.UIHelper;
 import com.LabManagementAppUI.Manager.ConfigurationManager;
 import com.LabManagementAppUI.Services.Handler;
 import com.LabManagementAppUI.auxiliaryClasses.Client;
@@ -10,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -21,6 +23,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -82,13 +85,13 @@ public class Main extends Application {
                     Integer.parseInt(ConfigurationManager.getInstance().getRoomID()));
             connectToComputers();
         });
-        Image logoImage = new Image("FetLogo.png");
-        ImageView logoImageView = new ImageView(logoImage);
-        logoImageView.setFitWidth(300);
-        logoImageView.setFitHeight(300);
-        VBox logoVbox = new VBox(10);
-        logoVbox.getChildren().add(logoImageView);
-        logoVbox.setAlignment(Pos.CENTER);
+//        Image logoImage = new Image("FetLogo.png");
+//        ImageView logoImageView = new ImageView(logoImage);
+//        logoImageView.setFitWidth(300);
+//        logoImageView.setFitHeight(300);
+//        VBox logoVbox = new VBox(10);
+//        logoVbox.getChildren().add(logoImageView);
+//        logoVbox.setAlignment(Pos.CENTER);
 
         Label welcomeLabel = new Label("Welcome to Lab Management Application");
         welcomeLabel.getStyleClass().add("welcome-text"); // Add the style class
@@ -101,7 +104,7 @@ public class Main extends Application {
         welcomeVbox.setAlignment(Pos.CENTER);
         welcomeButtons.setAlignment(Pos.CENTER);
         gridPane.setAlignment(Pos.CENTER);
-        gridPane.add(logoVbox, 0, 0);
+//        gridPane.add(logoVbox, 0, 0);
 
 
         gridPane.add(welcomeLabel, 0, 1);
@@ -240,15 +243,28 @@ public class Main extends Application {
                 this::receiveFile,
                 this::lockScreen,
                 this::openWebsite,
+                this::internetLimiting,
                 this::credits
         };
-        VBox leftButtonBox = new VBox(20);
+        String[] actionNames = {
+                "Share To Students",
+                "Share From Students",
+                "Take Control",
+                "Power On/Off",
+                "Send Files",
+                "Receive Files",
+                "Lock Screen",
+                "Open Website",
+                "Internet Access Limiting",
+                "Credits"
+        };
+        VBox leftButtonBox = new VBox(1);
         leftButtonBox.setBackground(createBackground(Color.web("#F6F5F4")));
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 10; i++) {
             ImageView imageView = createImageView("icon"+(i+1)+".png");
 
-            Button button = createButtonWithAction(imageView, actions[i]);
+            Button button = createButtonWithAction(imageView, actions[i], actionNames[i]);
             button.getStyleClass().add("button-11");
 
             leftButtonBox.getChildren().add(button);
@@ -358,20 +374,12 @@ public class Main extends Application {
 
         takeControlButton.setOnAction(e -> {
             String selectedIP = studentIPsListView.getSelectionModel().getSelectedItems().get(0);
-            try {
-                Handler.startControl(selectedIP);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            Handler.startControl(selectedIP);
         });
         Button stopControlButton = new Button("Stop Control!");
         stopControlButton.getStyleClass().add("button-21");
         stopControlButton.setOnAction(e -> {
-            try {
-                Handler.stopControl(studentIPsListView.getSelectionModel().getSelectedItems().get(0)            );
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            Handler.stopControl(studentIPsListView.getSelectionModel().getSelectedItems().get(0));
         });
 
         VBox shareVbox = new VBox(10);  // 10 is the spacing between the children
@@ -403,11 +411,7 @@ public class Main extends Application {
         turnOffButton.getStyleClass().add("button-21");
         turnOffButton.setOnAction(e -> {
             ObservableList<String> selectedIPs = studentIPsListView.getSelectionModel().getSelectedItems();
-            try {
-                Handler.shutdown(selectedIPs);
-            } catch (UnknownHostException ex) {
-                throw new RuntimeException(ex);
-            }
+            Handler.shutdown(selectedIPs);
         });
         VBox shareVbox = new VBox(10);  // 10 is the spacing between the children
         shareVbox.getChildren().addAll(studentIPsListView, turnOnButton,turnOffButton);
@@ -524,23 +528,14 @@ public class Main extends Application {
         lockScreenButton.getStyleClass().add("button-21");
         lockScreenButton.setOnAction(e -> {
             ObservableList<String> selectedIPs = studentIPsListView.getSelectionModel().getSelectedItems();
-            try {
-                Handler.freeze(selectedIPs);
-            } catch (UnknownHostException ex) {
-                throw new RuntimeException(ex);
-            }
-
+            Handler.freeze(selectedIPs);
         });
 
         Button unlockButton = new Button("Unlock Screen!");
         unlockButton.getStyleClass().add("button-21");
         unlockButton.setOnAction(e -> {
             ObservableList<String> selectedIPs = studentIPsListView.getSelectionModel().getSelectedItems();
-            try {
-                Handler.unfreeze(selectedIPs);
-            } catch (UnknownHostException ex) {
-                throw new RuntimeException(ex);
-            }
+            Handler.unfreeze(selectedIPs);
         });
 
         VBox shareVbox = new VBox(10);  // 10 is the spacing between the children
@@ -584,11 +579,7 @@ public class Main extends Application {
             Button sendURLButton = new Button("Send URL");
             sendURLButton.getStyleClass().add("button-21");
             sendURLButton.setOnAction(event -> {
-                try {
-                    Handler.openApp(selectedIPs, selectedBrowser, URLText.getText());
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                Handler.openApp(selectedIPs, selectedBrowser, URLText.getText());
             });
 
             VBox vbox = new VBox(10);
@@ -607,6 +598,121 @@ public class Main extends Application {
         gridPane.add(shareVbox, 0, 0); // Add to column 0, row 0
         borderPane.setCenter(gridPane);
     }
+    private void internetLimiting() {
+        gridPane.getChildren().clear();
+        Label label = new Label("Select from below: ");
+        List<CheckBox> line = new ArrayList<>();
+        List<CheckBox> clientBoxes = new ArrayList<>();
+        VBox vBox = new VBox(10);
+
+        final int columns = 5;
+        VBox checkboxGroup = new VBox(10);
+        checkboxGroup.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, null)));
+        for(Client client: lan.getClients().values()) {
+            CheckBox checkBox = new CheckBox(String.valueOf(client.getId()));
+            checkBox.setId(client.getIpAddress());
+            checkBox.setPadding(new Insets(10, 10, 10, 10));
+            clientBoxes.add(checkBox);
+            line.add(checkBox);
+
+            if(line.size() == columns) {
+                HBox box = new HBox(10);
+
+                box.getChildren().addAll(line);
+                checkboxGroup.getChildren().add(box);
+                line.clear();
+            }
+        }
+        HBox box = new HBox(10);
+        box.setAlignment(Pos.CENTER);
+        box.getChildren().addAll(line);
+        checkboxGroup.getChildren().add(box);
+
+        Button allowDefault = UIHelper.createNormalButton("Allow Default");
+        Button unblockAll = UIHelper.createNormalButton("Unblock All");
+        Button blockWebsite = UIHelper.createNormalButton("Block Website");
+        Button allowWebsite = UIHelper.createNormalButton("Allow Website");
+
+        VBox extraBlockData = new VBox(10);
+        VBox extraAllowData = new VBox(10);
+        Label allowURLLabel = new Label("Enter Website To Allow: ");
+        TextField allowURLText = new TextField();
+        Label blockURLLabel = new Label("Enter Website To Block: ");
+        TextField blockURLText = new TextField();
+        Button submitBlockWebsite = UIHelper.createNormalButton("Submit URL");
+        Button submitAllowWebsite = UIHelper.createNormalButton("Submit URL");
+
+        submitAllowWebsite.setOnAction(e -> {
+            String URL = allowURLText.getText();
+            Handler.allowWebsite(getCheckedBoxes(clientBoxes), URL);
+            vBox.getChildren().remove(extraAllowData);
+            allowWebsite.setVisible(true);
+            allowDefault.setDisable(false);
+            unblockAll.setDisable(false);
+        });
+
+        submitBlockWebsite.setOnAction(e -> {
+            String URL = blockURLText.getText();
+            Handler.blockWebsite(getCheckedBoxes(clientBoxes), URL);
+            vBox.getChildren().remove(extraBlockData);
+            blockWebsite.setVisible(true);
+            allowDefault.setDisable(false);
+            unblockAll.setDisable(false);
+        });
+
+        extraBlockData.getChildren().addAll(blockURLLabel, blockURLText, submitBlockWebsite);
+        extraBlockData.setAlignment(Pos.CENTER);
+        extraAllowData.getChildren().addAll(allowURLLabel, allowURLText, submitAllowWebsite);
+        extraAllowData.setAlignment(Pos.CENTER);
+
+        allowDefault.setOnAction(e -> {
+            Handler.allowDefault(getCheckedBoxes(clientBoxes));
+        });
+        unblockAll.setOnAction(e -> {
+            Handler.unblockAll(getCheckedBoxes(clientBoxes));
+        });
+
+        allowWebsite.setOnAction(e -> {
+            if(allowDefault.isDisabled()) {
+                vBox.getChildren().remove(extraBlockData);
+                blockWebsite.setVisible(true);
+            }
+            allowDefault.setDisable(true);
+            unblockAll.setDisable(true);
+            allowWebsite.setVisible(false);
+            vBox.getChildren().add(vBox.getChildren().size() - 3, extraAllowData);
+        });
+
+        blockWebsite.setOnAction(e -> {
+            if(allowDefault.isDisabled()) {
+                vBox.getChildren().remove(extraAllowData);
+                allowWebsite.setVisible(true);
+            }
+            allowDefault.setDisable(true);
+            unblockAll.setDisable(true);
+            blockWebsite.setVisible(false);
+
+            vBox.getChildren().add(vBox.getChildren().size() - 2, extraBlockData);
+        });
+
+        vBox.getChildren().addAll(label, checkboxGroup, allowDefault, allowWebsite, blockWebsite, unblockAll);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setPadding(new Insets(10, 10, 10, 10));
+
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.add(vBox, 0, 0); // Add to column 0, row 0
+        borderPane.setCenter(gridPane);
+
+    }
+    private List<String> getCheckedBoxes(List<CheckBox> checkBoxes) {
+        List<String> selected = new ArrayList<>();
+        for(CheckBox checkBox: checkBoxes) {
+            if(checkBox.isSelected()) {
+                selected.add(checkBox.getId());
+            }
+        }
+        return selected;
+    }
     private void credits(){gridPane.getChildren().clear();}
 
 
@@ -618,10 +724,13 @@ public class Main extends Application {
         imageView.setFitHeight(35);
         return imageView;
     }
-    private static Button createButtonWithAction(ImageView imageView, Runnable action) {
+    private static Button createButtonWithAction(ImageView imageView, Runnable action, String actionName) {
         Button button = new Button("", imageView);
         button.getStyleClass().add("custom-button");
         button.setOnAction(e -> action.run());
+        Tooltip tooltip = new Tooltip(actionName);
+        tooltip.setShowDelay(Duration.seconds(0.1));
+        button.setTooltip(tooltip);
         return button;
     }
     private Background createBackground(Paint fill) {

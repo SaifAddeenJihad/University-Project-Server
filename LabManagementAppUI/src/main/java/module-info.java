@@ -3,7 +3,6 @@ module com.example.demo {
     requires javafx.fxml;
     requires java.desktop;
     requires snappy.java;
-    requires org.slf4j;
     requires org.apache.logging.log4j;
 
 
